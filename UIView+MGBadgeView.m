@@ -75,18 +75,25 @@ static int const kMGBadgeViewTag = 9876;
 
 - (void)setBadgeValue:(NSInteger)badgeValue {
     
-    if(_badgeValue != badgeValue) {
+    if (_badgeValue != badgeValue) {
         
         _badgeValue = badgeValue;
         
-        if(badgeValue != 0 || _displayIfZero) {
+        if (badgeValue != 0 || _displayIfZero) {
             [self mg_updateBadgeViewSize];
         
-            if(_position == MGBadgePositionBest)
+            if (_position == MGBadgePositionBest) {
                 [self mg_updateBadgeViewPosition];
-        
-        } else {
-            self.frame = CGRectZero;
+            }
+            
+            [UIView animateWithDuration:0.2f animations:^{
+                self.alpha = 1.0f;
+            }];
+        }
+        else {
+            [UIView animateWithDuration:0.2 animations:^{
+                self.alpha = 0.0f;
+            }];
         }
         
         [self setNeedsDisplay];
